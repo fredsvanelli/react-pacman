@@ -1,0 +1,18 @@
+.game-board {
+    background-color: black;
+    /* Remove ou comente a linha da borda */
+    /* border: 2px solid #2121ff; */
+}
+
+.lives-container {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.life-icon {
+    width: 20px;
+    height: 20px;
+}
