@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 
-export const useGameLoop = (callback: () => void) => {
+export const useGameLoop = (callback: () => void): void => {
     const requestRef = useRef<number | null>(null)
     const previousTimeRef = useRef<number | null>(null)
     const callbackRef = useRef(callback)
     // Atualiza o ref com o callback mais recente
     callbackRef.current = callback
 
-    const animate = (time: number) => {
+    const animate = (time: DOMHighResTimeStamp): void => {
         if (previousTimeRef.current !== null) {
             callbackRef.current() // Usa a versão mais recente do callback
         }

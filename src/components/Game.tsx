@@ -1,21 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { GameMap, Position, Direction } from '../types/game'
+import { GameMap, Position, Direction, GhostType } from '../types/game'
 import { useGameLoop } from '../hooks/useGameLoop'
 import { INITIAL_MAP } from '../constants/map'
 import './Game.css'
 import Player from './Player'
 import Ghost from './Ghost'
-import { GhostBehavior, hasReachedHouse } from '../utils/ghostBehaviors'
+import { hasReachedHouse } from '../utils/ghostBehaviors'
 import PacmanIcon from './PacmanIcon'
 
-interface Ghost {
-    id: number
-    position: Position
-    color: string
-    behavior: GhostBehavior
-}
-
-const INITIAL_GHOSTS: Ghost[] = [
+const INITIAL_GHOSTS: GhostType[] = [
     { id: 1, position: { x: 8, y: 10 }, color: '#FF0000', behavior: 'chase' },   // Blinky: y de 9 para 10
     { id: 2, position: { x: 9, y: 9 }, color: '#FFB8FF', behavior: 'scatter' },   // Pinky: y de 8 para 9
     { id: 3, position: { x: 9, y: 10 }, color: '#00FFFF', behavior: 'scatter' },   // Inky: y de 9 para 10
@@ -39,7 +32,7 @@ const Game = ({ onScoreChange, lives, onLifeLost, onResetLives, restartGame }: G
     const [score, setScore] = useState(0)
     const [playerPos, setPlayerPos] = useState<Position>({ x: 9, y: 16 })
     const [playerDirection, setPlayerDirection] = useState<Direction>('left')
-    const [ghosts, setGhosts] = useState<Ghost[]>(INITIAL_GHOSTS)
+    const [ghosts, setGhosts] = useState<GhostType[]>(INITIAL_GHOSTS)
     const [currentDirection, setCurrentDirection] = useState<Direction | null>(null)
     const lastValidPosition = useRef(playerPos)
     const lastMoveTime = useRef(0)
@@ -234,7 +227,7 @@ const Game = ({ onScoreChange, lives, onLifeLost, onResetLives, restartGame }: G
         }
     }
 
-    const handlePlayerMove = (newPos: Position, newDirection: Direction) => {
+    const handlePlayerMove = (_: Position, newDirection: Direction) => {
         if (isInvincible || isGameOver) return
         if (currentDirection === newDirection) {
             return
@@ -343,7 +336,7 @@ const Game = ({ onScoreChange, lives, onLifeLost, onResetLives, restartGame }: G
         ctx.fill()
     }
 
-    const checkIfGhostsOverlap = (ghost: Ghost, ghosts: Ghost[]): Position => {
+    const checkIfGhostsOverlap = (ghost: GhostType, ghosts: GhostType[]): Position => {
         // Check if current position overlaps with other ghosts
         const overlappingGhost = ghosts.find(g =>
             g.id !== ghost.id &&

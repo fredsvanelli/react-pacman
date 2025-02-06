@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
-import { Position } from '../types/game'
-
-export type Direction = 'left' | 'right' | 'up' | 'down'
+import { Position, Direction } from '../types/game'
 
 interface PlayerProps {
     position: Position
     onMove: (newPos: Position, direction: Direction) => void
 }
 
-const Player = ({ position, onMove }: PlayerProps) => {
+const Player = ({ position, onMove }: PlayerProps): null => {
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             const newPos = { ...position }

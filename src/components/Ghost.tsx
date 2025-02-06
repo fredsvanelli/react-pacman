@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { Position } from '../types/game'
-import { ghostBehaviors, GhostBehavior } from '../utils/ghostBehaviors'
+import { Position, GhostBehavior, GameMap } from '../types/game'
+import { ghostBehaviors } from '../utils/ghostBehaviors'
 
 interface GhostProps {
     id: number
@@ -8,8 +8,8 @@ interface GhostProps {
     behavior: GhostBehavior
     playerPos: Position
     playerDirection: string
-    blinkyPos?: Position
-    gameMap: string[][]
+    blinkyPos: Position
+    gameMap: GameMap
     onMove: (newPos: Position) => void
 }
 
@@ -22,7 +22,7 @@ const Ghost = ({
     blinkyPos,
     gameMap,
     onMove
-}: GhostProps) => {
+}: GhostProps): null => {
     const moveIntervalRef = useRef<number | null>(null)
     const isVulnerable = behavior === 'frightened'
     const isEyes = behavior === 'eyes'
@@ -48,7 +48,7 @@ const Ghost = ({
                             position,
                             playerPos,
                             playerDirection,
-                            blinkyPos || { x: 0, y: 0 },
+                            blinkyPos,
                             gameMap,
                             isVulnerable
                         )
